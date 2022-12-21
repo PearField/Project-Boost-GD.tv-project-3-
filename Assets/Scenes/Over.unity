@@ -180,23 +180,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3454b56c939543d2ba08a8b9ae26824, type: 3}
---- !u!1 &286472060 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1499740673466335047, guid: b3454b56c939543d2ba08a8b9ae26824, type: 3}
-  m_PrefabInstance: {fileID: 286472059}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &286472066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 286472060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666424736dec24b12903126f897dd928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +368,10 @@ PrefabInstance:
     - target: {fileID: 41088138112853224, guid: 379ef1e32ddd945f79891d463fc386ab, type: 3}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 41088138112853224, guid: 379ef1e32ddd945f79891d463fc386ab, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 9.839513
       objectReference: {fileID: 0}
     - target: {fileID: 41088138112853224, guid: 379ef1e32ddd945f79891d463fc386ab, type: 3}
       propertyPath: m_LocalPosition.x
