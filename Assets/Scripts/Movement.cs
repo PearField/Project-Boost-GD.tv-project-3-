@@ -8,6 +8,8 @@ public class Movement : MonoBehaviour
     [SerializeField] float mainThrust = 100f;
     [SerializeField] float rotateSpeed = 1f;
     [SerializeField] AudioClip mainEngine;
+    [SerializeField] AudioClip rotationEngine;
+
 
     [SerializeField] ParticleSystem mainEngineParticles;
     [SerializeField] ParticleSystem leftEngineParticles;
@@ -38,24 +40,12 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            myRigidbody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
-
-            if (!audioSource.isPlaying)
-            {
-                audioSource.PlayOneShot(mainEngine);
-            }
-
-            if (!mainEngineParticles.isPlaying)
-            {
-                mainEngineParticles.Play();
-            }
-     
+            StartThrusting();
         }
         else
         {
-            audioSource.Stop();
-            mainEngineParticles.Stop();
-        }
+            StopThrusting();
+        }     
     }
 
     //Processes input to make spacecraft rotate
@@ -63,28 +53,65 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            Rotate(rotateSpeed);
-            if (!rightEngineParticles.isPlaying)
-            {
-                rightEngineParticles.Play();
-            }
-            
+            RotateLeft();
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            Rotate(-rotateSpeed);
-            if (!leftEngineParticles.isPlaying)
-            {
-                leftEngineParticles.Play();
-            }
-            
+            RotateRight();
         }
         else
         {
-            leftEngineParticles.Stop();
-            rightEngineParticles.Stop();
+            StopRotating();
         }
-        
+    }
+
+    void StartThrusting()
+    {
+        myRigidbody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
+
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(mainEngine);
+        }
+
+        if (!mainEngineParticles.isPlaying)
+        {
+            mainEngineParticles.Play();
+        }
+    }
+
+    void StopThrusting()
+    {
+        audioSource.Stop();
+        mainEngineParticles.Stop();
+    }
+
+    void RotateRight()
+    {
+        Rotate(-rotateSpeed);
+        if (!leftEngineParticles.isPlaying)
+        {
+            leftEngineParticles.Play();
+        }
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(rotationEngine);
+        }
+    }
+
+    void RotateLeft()
+    {
+        Rotate(rotateSpeed);
+        if (!rightEngineParticles.isPlaying)
+        {
+            rightEngineParticles.Play();
+        }
+    }
+
+    private void StopRotating()
+    {
+        leftEngineParticles.Stop();
+        rightEngineParticles.Stop();
     }
 
     void Rotate(float rotationThisFrame)
