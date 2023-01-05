@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 286472066}
   m_Layer: 0
   m_Name: Rocket
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -170,8 +170,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainThrust: 1000
   rotateSpeed: 200
-  mainEngine: {fileID: 8300000, guid: b503558a45efb4226af7334e4c859e33, type: 3}
-  rotationEngine: {fileID: 8300000, guid: 998f4031f98704cce87b5c73f7f5d0e1, type: 3}
   mainEngineParticles: {fileID: 6622642923868505754}
   leftEngineParticles: {fileID: 267890262794980101}
   rightEngineParticles: {fileID: 8939861888060487901}
@@ -188,8 +186,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelLoadDelay: 1.5
-  crashSound: {fileID: 8300000, guid: 83ae5d0c7f99646ac9d232bc6650da14, type: 3}
-  winSound: {fileID: 8300000, guid: eec6623e10b1940ce9d1e48ddec09fc4, type: 3}
   crashParticles: {fileID: 4725054205461579989}
   winParticles: {fileID: 293682315401786189}
 --- !u!1 &2477599914719511198

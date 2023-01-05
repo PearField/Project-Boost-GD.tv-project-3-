@@ -7,8 +7,9 @@ public class Movement : MonoBehaviour
     
     [SerializeField] float mainThrust = 100f;
     [SerializeField] float rotateSpeed = 1f;
-    [SerializeField] AudioClip mainEngine;
-    [SerializeField] AudioClip rotationEngine;
+    
+    private FMOD.Studio.EventInstance mainEngineSound;
+    private FMOD.Studio.EventInstance rotationEngineSound;
 
 
     [SerializeField] ParticleSystem mainEngineParticles;
@@ -19,6 +20,8 @@ public class Movement : MonoBehaviour
     AudioSource audioSource;
     Rigidbody myRigidbody;
 
+    
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,9 @@ public class Movement : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody>();
         
         audioSource = GetComponent<AudioSource>();
+
+        mainEngineSound = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Main booster");
+        rotationEngineSound = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Side boosters");
     }
 
     // Update is called once per frame
@@ -42,15 +48,23 @@ public class Movement : MonoBehaviour
         {
             StartThrusting();
         }
-        else
+        else if (Input.GetKeyUp(KeyCode.Space))
         {
             StopThrusting();
-        }     
+        }
     }
 
     //Processes input to make spacecraft rotate
     void ProcessRotation()
     {
+        // Starts rotation engine sound
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        {
+            FMODUnity.RuntimeManager.AttachInstanceToGameObject(rotationEngineSound, transform, GetComponent<Rigidbody>());
+            rotationEngineSound.start();
+        }
+
+        // Rotation 
         if (Input.GetKey(KeyCode.A))
         {
             RotateLeft();
@@ -63,27 +77,33 @@ public class Movement : MonoBehaviour
         {
             StopRotating();
         }
+        
     }
 
     void StartThrusting()
     {
         myRigidbody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
 
-        if (!audioSource.isPlaying)
-        {
-            audioSource.PlayOneShot(mainEngine);
-        }
-
         if (!mainEngineParticles.isPlaying)
         {
             mainEngineParticles.Play();
         }
+        
+        // Plays engine sound once when first pressing down space to boost.
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            FMODUnity.RuntimeManager.AttachInstanceToGameObject(mainEngineSound, transform, GetComponent<Rigidbody>());
+
+            mainEngineSound.start();
+        }
+        
     }
 
     void StopThrusting()
     {
-        audioSource.Stop();
+        // Stops particle effects and sends engine sound to last point in sound event, effectively ending the sound.
         mainEngineParticles.Stop();
+        mainEngineSound.keyOff();
     }
 
     void RotateRight()
@@ -92,10 +112,6 @@ public class Movement : MonoBehaviour
         if (!leftEngineParticles.isPlaying)
         {
             leftEngineParticles.Play();
-        }
-        if (!audioSource.isPlaying)
-        {
-            audioSource.PlayOneShot(rotationEngine);
         }
     }
 
@@ -112,6 +128,7 @@ public class Movement : MonoBehaviour
     {
         leftEngineParticles.Stop();
         rightEngineParticles.Stop();
+        rotationEngineSound.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
     void Rotate(float rotationThisFrame)
