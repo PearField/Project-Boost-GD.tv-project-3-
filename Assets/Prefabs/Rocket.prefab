@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 666424736dec24b12903126f897dd928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelLoadDelay: 1.5
+  levelLoadDelay: 3
   crashParticles: {fileID: 4725054205461579989}
   winParticles: {fileID: 293682315401786189}
 --- !u!1 &2477599914719511198

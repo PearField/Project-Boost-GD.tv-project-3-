@@ -24,8 +24,7 @@ public class CollisionHandler : MonoBehaviour
     private void Start()
     {
         enginesBus = FMODUnity.RuntimeManager.GetBus("Bus:/");
-        
-        
+        enginesBus.stopAllEvents(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
     private void Update()
@@ -73,7 +72,6 @@ public class CollisionHandler : MonoBehaviour
     void StartCrashSequence()
     {
         isTransitioning = true;
-        enginesBus.stopAllEvents(FMOD.Studio.STOP_MODE.IMMEDIATE);
         GetComponent<Movement>().enabled = false;
         Debug.Log("You crashed, try again");
         crashParticles.Play();
@@ -113,19 +111,19 @@ public class CollisionHandler : MonoBehaviour
         //0 = lose
         //1 = win
         //2 = have alreade crashed
-        
+
         if (winOrLose == 0)
         {
-            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Lose Explosion");
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Lose Explosion", gameObject.GetComponent<Transform>().position);
             haveLost = true;
         }
         else if (winOrLose == 1)
         {
-            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Win sound");
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Win sound", gameObject.GetComponent<Transform>().position);
         }
         else if (winOrLose == 2 && haveLost == true)
         {
-            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crash sound");
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crash sound", gameObject.GetComponent<Transform>().position);
         }
     }
 }
